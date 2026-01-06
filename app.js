@@ -319,9 +319,16 @@ function updateSubTaskProgress(taskId, subTaskId, progress) {
             subTask.progress = parseInt(progress);
             task.updatedAt = new Date().toISOString();
             saveToStorage();
-            renderTasks();
-            renderCompletedTasks();
-            if (selectedDate) renderCalendarTasks();
+
+            // Update overall progress bar without re-rendering
+            const overallProgress = calculateOverallProgress(task);
+            const taskCard = document.querySelector(`[onclick*="toggleTaskExpand('${taskId}')"]`)?.closest('.task-card');
+            if (taskCard) {
+                const progressBar = taskCard.querySelector('.progress-bar-fill');
+                const progressPercentage = taskCard.querySelector('.progress-percentage');
+                if (progressBar) progressBar.style.width = `${overallProgress}%`;
+                if (progressPercentage) progressPercentage.textContent = `${overallProgress}%`;
+            }
         }
     }
 }
