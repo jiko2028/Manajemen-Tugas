@@ -8,22 +8,22 @@ let notificationsEnabled = false;
 document.addEventListener('DOMContentLoaded', () => {
     // Show loading screen
     showLoadingScreen();
-    
+
     // Load data from localStorage
     loadFromStorage();
-    
+
     // Initialize date
     updateCurrentDate();
-    
+
     // Setup event listeners
     setupEventListeners();
-    
+
     // Check if user has visited before
     const hasVisited = localStorage.getItem('hasVisited');
-    
+
     setTimeout(() => {
         hideLoadingScreen();
-        
+
         if (!hasVisited) {
             showWelcomeScreen();
             localStorage.setItem('hasVisited', 'true');
@@ -76,13 +76,13 @@ function navigateTo(viewId) {
     // Hide all views
     const views = document.querySelectorAll('.view');
     views.forEach(view => view.classList.remove('active'));
-    
+
     // Show selected view
     const selectedView = document.getElementById(viewId);
     if (selectedView) {
         selectedView.classList.add('active');
     }
-    
+
     // Update bottom nav
     const navItems = document.querySelectorAll('.nav-item');
     navItems.forEach(item => {
@@ -92,7 +92,7 @@ function navigateTo(viewId) {
             item.classList.remove('active');
         }
     });
-    
+
     // Update header title
     const headerTitle = document.getElementById('headerTitle');
     const titles = {
@@ -103,7 +103,7 @@ function navigateTo(viewId) {
         'settingsView': 'Pengaturan'
     };
     headerTitle.textContent = titles[viewId] || 'Manajemen Tugas';
-    
+
     // Render appropriate content
     if (viewId === 'tasksView') {
         renderTasks();
@@ -119,11 +119,11 @@ function setupEventListeners() {
     // Task form
     const taskForm = document.getElementById('taskForm');
     taskForm.addEventListener('submit', handleTaskSubmit);
-    
+
     // Search
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', handleSearch);
-    
+
     // Filter tabs
     const filterTabs = document.querySelectorAll('.filter-tab');
     filterTabs.forEach(tab => {
@@ -134,11 +134,11 @@ function setupEventListeners() {
             renderTasks();
         });
     });
-    
+
     // Character counter
     const taskNotes = document.getElementById('taskNotes');
     taskNotes.addEventListener('input', updateCharCounter);
-    
+
     // Check for reminders every minute
     setInterval(checkReminders, 60000);
 }
@@ -157,7 +157,7 @@ function formatDeadline(dateString) {
     const diff = date - now;
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    
+
     if (diff < 0) {
         return 'Terlambat';
     } else if (days === 0 && hours < 24) {
@@ -179,25 +179,25 @@ function isToday(dateString) {
     const date = new Date(dateString);
     const today = new Date();
     return date.getDate() === today.getDate() &&
-           date.getMonth() === today.getMonth() &&
-           date.getFullYear() === today.getFullYear();
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear();
 }
 
 // ===== Task Management =====
 function handleTaskSubmit(e) {
     e.preventDefault();
-    
+
     const taskId = document.getElementById('taskId').value;
     const title = document.getElementById('taskTitle').value.trim();
     const priority = document.getElementById('taskPriority').value;
     const deadline = document.getElementById('taskDeadline').value;
     const notes = document.getElementById('taskNotes').value.trim();
-    
+
     if (!title || !deadline) {
         showToast('Mohon lengkapi semua field yang wajib', 'error');
         return;
     }
-    
+
     if (taskId) {
         // Edit existing task
         const task = tasks.find(t => t.id === taskId);
@@ -218,13 +218,15 @@ function handleTaskSubmit(e) {
             deadline,
             notes,
             completed: false,
+            subTasks: [],
+            expanded: false,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString()
         };
         tasks.push(newTask);
         showToast('Tugas berhasil ditambahkan', 'success');
     }
-    
+
     saveToStorage();
     renderTasks();
     updateStats();
@@ -241,7 +243,7 @@ function toggleTaskComplete(taskId) {
         renderTasks();
         updateStats();
         updateTodaySchedule();
-        
+
         if (task.completed) {
             showToast('Tugas selesai! 🎉', 'success');
         }
@@ -274,11 +276,80 @@ function deleteTask(taskId) {
     }
 }
 
+// ===== Sub-tasks Management =====
+function toggleTaskExpand(taskId) {
+    const task = tasks.find(t => t.id === taskId);
+    if (task) {
+        task.expanded = !task.expanded;
+        renderTasks();
+        renderCompletedTasks();
+        if (selectedDate) renderCalendarTasks();
+    }
+}
+
+function addSubTask(taskId) {
+    const task = tasks.find(t => t.id === taskId);
+    if (task) {
+        const description = prompt('Masukkan deskripsi sub-task:');
+        if (description && description.trim()) {
+            if (!task.subTasks) task.subTasks = [];
+
+            const newSubTask = {
+                id: generateId(),
+                description: description.trim(),
+                progress: 0
+            };
+
+            task.subTasks.push(newSubTask);
+            task.updatedAt = new Date().toISOString();
+            saveToStorage();
+            renderTasks();
+            renderCompletedTasks();
+            if (selectedDate) renderCalendarTasks();
+            showToast('Sub-task berhasil ditambahkan', 'success');
+        }
+    }
+}
+
+function updateSubTaskProgress(taskId, subTaskId, progress) {
+    const task = tasks.find(t => t.id === taskId);
+    if (task && task.subTasks) {
+        const subTask = task.subTasks.find(st => st.id === subTaskId);
+        if (subTask) {
+            subTask.progress = parseInt(progress);
+            task.updatedAt = new Date().toISOString();
+            saveToStorage();
+            renderTasks();
+            renderCompletedTasks();
+            if (selectedDate) renderCalendarTasks();
+        }
+    }
+}
+
+function deleteSubTask(taskId, subTaskId) {
+    const task = tasks.find(t => t.id === taskId);
+    if (task && task.subTasks) {
+        task.subTasks = task.subTasks.filter(st => st.id !== subTaskId);
+        task.updatedAt = new Date().toISOString();
+        saveToStorage();
+        renderTasks();
+        renderCompletedTasks();
+        if (selectedDate) renderCalendarTasks();
+        showToast('Sub-task berhasil dihapus', 'success');
+    }
+}
+
+function calculateOverallProgress(task) {
+    if (!task.subTasks || task.subTasks.length === 0) return 0;
+    const total = task.subTasks.reduce((sum, st) => sum + st.progress, 0);
+    return Math.round(total / task.subTasks.length);
+}
+
 // ===== Rendering =====
 function renderTasks() {
     const taskList = document.getElementById('taskList');
     const emptyState = document.getElementById('emptyState');
-    
+
     let filteredTasks = tasks.filter(task => {
         if (currentFilter === 'all') return true;
         if (currentFilter === 'pending') return !task.completed;
@@ -286,16 +357,16 @@ function renderTasks() {
         if (currentFilter === 'overdue') return !task.completed && isOverdue(task.deadline);
         return true;
     });
-    
+
     // Apply search filter
     const searchQuery = document.getElementById('searchInput').value.toLowerCase();
     if (searchQuery) {
-        filteredTasks = filteredTasks.filter(task => 
+        filteredTasks = filteredTasks.filter(task =>
             task.title.toLowerCase().includes(searchQuery) ||
             (task.notes && task.notes.toLowerCase().includes(searchQuery))
         );
     }
-    
+
     if (filteredTasks.length === 0) {
         taskList.innerHTML = '';
         emptyState.classList.add('show');
@@ -309,11 +380,74 @@ function createTaskCard(task) {
     const overdueClass = !task.completed && isOverdue(task.deadline) ? 'overdue' : '';
     const completedClass = task.completed ? 'completed' : '';
     const priorityClass = `priority-${task.priority}`;
-    
+    const expandedClass = task.expanded ? 'expanded' : '';
+    const overallProgress = calculateOverallProgress(task);
+
+    // Sub-tasks HTML
+    let subTasksHTML = '';
+    if (task.expanded) {
+        if (task.subTasks && task.subTasks.length > 0) {
+            subTasksHTML = `
+                <div class="subtasks-section">
+                    <div class="subtasks-header">
+                        <h4>Sub-Tasks</h4>
+                        <div class="overall-progress">
+                            <span class="progress-label">Progress Keseluruhan:</span>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" style="width: ${overallProgress}%"></div>
+                            </div>
+                            <span class="progress-percentage">${overallProgress}%</span>
+                        </div>
+                    </div>
+                    <div class="subtasks-list">
+                        ${task.subTasks.map(subTask => `
+                            <div class="subtask-item">
+                                <div class="subtask-info">
+                                    <p class="subtask-description">${subTask.description}</p>
+                                    <div class="subtask-progress">
+                                        <input type="range" min="0" max="100" value="${subTask.progress}" 
+                                            class="progress-slider" 
+                                            oninput="updateSubTaskProgress('${task.id}', '${subTask.id}', this.value); this.nextElementSibling.textContent = this.value + '%'">
+                                        <span class="progress-value">${subTask.progress}%</span>
+                                    </div>
+                                </div>
+                                <button class="subtask-delete-btn" onclick="event.stopPropagation(); deleteSubTask('${task.id}', '${subTask.id}')">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <button class="add-subtask-btn" onclick="event.stopPropagation(); addSubTask('${task.id}')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Tambah Sub-Task
+                    </button>
+                </div>
+            `;
+        } else {
+            subTasksHTML = `
+                <div class="subtasks-section">
+                    <div class="subtasks-empty">
+                        <p>Belum ada sub-task</p>
+                        <button class="add-subtask-btn" onclick="event.stopPropagation(); addSubTask('${task.id}')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            Tambah Sub-Task
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
     return `
-        <div class="task-card ${completedClass} ${overdueClass} ${priorityClass}">
-            <div class="task-header">
-                <div class="task-checkbox ${task.completed ? 'checked' : ''}" onclick="toggleTaskComplete('${task.id}')">
+        <div class="task-card ${completedClass} ${overdueClass} ${priorityClass} ${expandedClass}">
+            <div class="task-header" onclick="toggleTaskExpand('${task.id}')">
+                <div class="task-checkbox ${task.completed ? 'checked' : ''}" onclick="event.stopPropagation(); toggleTaskComplete('${task.id}')">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                         <path d="M3 8L6 11L13 4" stroke="white" stroke-width="2" stroke-linecap="round"/>
                     </svg>
@@ -327,19 +461,26 @@ function createTaskCard(task) {
                         <span class="task-priority-badge ${task.priority}">
                             ${task.priority === 'high' ? 'Tinggi' : task.priority === 'medium' ? 'Sedang' : 'Rendah'}
                         </span>
+                        ${task.subTasks && task.subTasks.length > 0 ? `<span class="subtask-count">📋 ${task.subTasks.length} sub-task</span>` : ''}
                     </div>
                     ${task.notes ? `<p class="task-notes">${task.notes}</p>` : ''}
                 </div>
+                <div class="expand-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
             </div>
+            ${subTasksHTML}
             <div class="task-actions">
-                <button class="task-btn edit" onclick="editTask('${task.id}')">
+                <button class="task-btn edit" onclick="event.stopPropagation(); editTask('${task.id}')">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                         <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         <path d="M18.5 2.50001C18.8978 2.10219 19.4374 1.87869 20 1.87869C20.5626 1.87869 21.1022 2.10219 21.5 2.50001C21.8978 2.89784 22.1213 3.4374 22.1213 4.00001C22.1213 4.56262 21.8978 5.10219 21.5 5.50001L12 15L8 16L9 12L18.5 2.50001Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                     </svg>
                     Edit
                 </button>
-                <button class="task-btn delete" onclick="deleteTask('${task.id}')">
+                <button class="task-btn delete" onclick="event.stopPropagation(); deleteTask('${task.id}')">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                         <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -354,9 +495,9 @@ function createTaskCard(task) {
 function renderCompletedTasks() {
     const completedTaskList = document.getElementById('completedTaskList');
     const emptyState = document.getElementById('emptyCompletedState');
-    
+
     const completedTasks = tasks.filter(task => task.completed);
-    
+
     if (completedTasks.length === 0) {
         completedTaskList.innerHTML = '';
         emptyState.classList.add('show');
@@ -369,7 +510,7 @@ function renderCompletedTasks() {
 function updateTodaySchedule() {
     const scheduleCard = document.getElementById('todaySchedule');
     const todayTasks = tasks.filter(task => !task.completed && isToday(task.deadline));
-    
+
     if (todayTasks.length === 0) {
         scheduleCard.innerHTML = '<p class="empty-message">Tidak ada jadwal untuk hari ini</p>';
     } else {
@@ -398,22 +539,22 @@ function updateStats() {
     const completedTasks = tasks.filter(t => t.completed).length;
     const pendingTasks = tasks.filter(t => !t.completed).length;
     const overdueTasks = tasks.filter(t => !t.completed && isOverdue(t.deadline)).length;
-    
+
     // Update stat cards
     document.getElementById('totalTasks').textContent = totalTasks;
     document.getElementById('completedTasks').textContent = completedTasks;
     document.getElementById('pendingTasks').textContent = pendingTasks;
     document.getElementById('overdueTasks').textContent = overdueTasks;
-    
+
     // Update progress circle
     const percentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
     document.getElementById('progressPercentage').textContent = `${percentage}%`;
-    
+
     const progressCircle = document.getElementById('progressCircle');
     const circumference = 534; // 2 * PI * 85
     const offset = circumference - (percentage / 100) * circumference;
     progressCircle.style.strokeDashoffset = offset;
-    
+
     // Add gradient definition if not exists
     if (!document.getElementById('progressGradient')) {
         const svg = progressCircle.closest('svg');
@@ -426,7 +567,7 @@ function updateStats() {
         `;
         svg.insertBefore(defs, svg.firstChild);
     }
-    
+
     // Update notification badge
     const notificationBadge = document.getElementById('notificationBadge');
     const upcomingTasks = tasks.filter(t => !t.completed && !isOverdue(t.deadline)).length;
@@ -444,7 +585,7 @@ function closeTaskModal() {
     const modal = document.getElementById('taskModal');
     modal.classList.remove('active');
     document.body.style.overflow = '';
-    
+
     // Reset form
     document.getElementById('taskForm').reset();
     document.getElementById('taskId').value = '';
@@ -565,33 +706,33 @@ function toggleNotifications() {
     const toggle = document.getElementById('notificationToggle');
     notificationsEnabled = toggle.checked;
     localStorage.setItem('notificationsEnabled', notificationsEnabled);
-    
+
     if (notificationsEnabled && Notification.permission === 'default') {
         requestNotificationPermission();
     }
-    
+
     showToast(notificationsEnabled ? 'Notifikasi diaktifkan' : 'Notifikasi dinonaktifkan', 'success');
 }
 
 function checkReminders() {
     if (!notificationsEnabled || Notification.permission !== 'granted') return;
-    
+
     const now = new Date();
-    
+
     tasks.forEach(task => {
         if (task.completed) return;
-        
+
         const deadline = new Date(task.deadline);
         const timeDiff = deadline - now;
         const hoursDiff = timeDiff / (1000 * 60 * 60);
-        
+
         // Reminder 24 hours before
         if (hoursDiff > 23 && hoursDiff <= 24 && !task.reminded24h) {
             showNotification(task.title, '24 jam lagi!');
             task.reminded24h = true;
             saveToStorage();
         }
-        
+
         // Reminder 1 hour before
         if (hoursDiff > 0 && hoursDiff <= 1 && !task.reminded1h) {
             showNotification(task.title, '1 jam lagi!');
@@ -615,11 +756,11 @@ function saveUserName() {
     if (userName) {
         localStorage.setItem('userName', userName);
         document.getElementById('userName').textContent = userName;
-        
+
         // Update avatar
         const userAvatar = document.getElementById('userAvatar');
         userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=6366f1&color=fff&size=80`;
-        
+
         showToast('Nama berhasil disimpan', 'success');
     }
 }
@@ -646,17 +787,17 @@ function loadFromStorage() {
     if (storedTasks) {
         tasks = JSON.parse(storedTasks);
     }
-    
+
     // Load user name
     const userName = localStorage.getItem('userName');
     if (userName) {
         document.getElementById('userName').textContent = userName;
         document.getElementById('userNameInput').value = userName;
-        
+
         const userAvatar = document.getElementById('userAvatar');
         userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=6366f1&color=fff&size=80`;
     }
-    
+
     // Load notification settings
     const notifEnabled = localStorage.getItem('notificationsEnabled');
     if (notifEnabled === 'true') {
@@ -670,12 +811,12 @@ function showToast(message, type = 'success') {
     const toast = document.getElementById('toast');
     const toastMessage = document.getElementById('toastMessage');
     const toastIcon = document.getElementById('toastIcon');
-    
+
     toastMessage.textContent = message;
     toastIcon.textContent = type === 'success' ? '✓' : '✕';
-    
+
     toast.classList.add('show');
-    
+
     setTimeout(() => {
         toast.classList.remove('show');
     }, 3000);

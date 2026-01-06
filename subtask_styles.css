@@ -1,0 +1,235 @@
+/* ===== Sub-tasks Styling ===== */
+/* Tambahkan CSS ini di akhir file style.css */
+
+/* Expand icon */
+.expand-icon {
+    margin-left: auto;
+    transition: var(--transition);
+    color: var(--text-muted);
+}
+
+.task-card.expanded .expand-icon {
+    transform: rotate(180deg);
+}
+
+.task-card .task-header {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Sub-task count badge */
+.subtask-count {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.125rem 0.5rem;
+    border-radius: 12px;
+    background: #e0e7ff;
+    color: var(--primary);
+}
+
+/* Sub-tasks section */
+.subtasks-section {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px dashed #e5e7eb;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+
+    to {
+        opacity: 1;
+        max-height: 1000px;
+    }
+}
+
+.subtasks-header {
+    margin-bottom: 1rem;
+}
+
+.subtasks-header h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+/* Overall progress */
+.overall-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.progress-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.progress-bar-container {
+    flex: 1;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 4px;
+    transition: width 0.3s ease-out;
+}
+
+.progress-percentage {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--primary);
+    min-width: 45px;
+    text-align: right;
+}
+
+/* Sub-tasks list */
+.subtasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.subtask-item {
+    background: #f9fafb;
+    border-radius: var(--radius-md);
+    padding: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: var(--transition);
+}
+
+.subtask-item:hover {
+    background: #f3f4f6;
+}
+
+.subtask-info {
+    flex: 1;
+}
+
+.subtask-description {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.subtask-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.progress-slider {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #e5e7eb;
+}
+
+.progress-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.progress-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+
+.progress-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    border: none;
+    transition: var(--transition);
+}
+
+.progress-slider::-moz-range-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+
+.progress-value {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--primary);
+    min-width: 45px;
+    text-align: right;
+}
+
+.subtask-delete-btn {
+    background: transparent;
+    border: none;
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    color: var(--danger);
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.subtask-delete-btn:hover {
+    background: #fee2e2;
+}
+
+/* Add sub-task button */
+.add-subtask-btn {
+    width: 100%;
+    background: white;
+    border: 2px dashed #d1d5db;
+    color: var(--primary);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.add-subtask-btn:hover {
+    border-color: var(--primary);
+    background: #f0f4ff;
+}
+
+/* Empty state */
+.subtasks-empty {
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.subtasks-empty p {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
