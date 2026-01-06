@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hideLoadingScreen();
 
         if (!hasVisited) {
-            showWelcomeScreen();
+            showOnboarding();
             localStorage.setItem('hasVisited', 'true');
         } else {
             showApp();
@@ -45,18 +45,42 @@ function hideLoadingScreen() {
 }
 
 // ===== Welcome Screen =====
-function showWelcomeScreen() {
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    welcomeScreen.classList.add('active');
+function showOnboarding() {
+    const onboardingContainer = document.getElementById('onboardingContainer');
+    onboardingContainer.classList.add('active');
 }
 
-function hideWelcomeScreen() {
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    welcomeScreen.classList.remove('active');
+function hideOnboarding() {
+    const onboardingContainer = document.getElementById('onboardingContainer');
+    onboardingContainer.classList.remove('active');
 }
 
-function startApp() {
-    hideWelcomeScreen();
+// ===== Onboarding Functions =====
+let currentOnboardingStep = 1;
+
+function nextOnboardingStep() {
+    if (currentOnboardingStep < 3) {
+        // Hide current step
+        document.getElementById(`onboardingStep${currentOnboardingStep}`).classList.remove('active');
+        document.querySelector(`.dot[data-step="${currentOnboardingStep}"]`).classList.remove('active');
+
+        // Show next step
+        currentOnboardingStep++;
+        document.getElementById(`onboardingStep${currentOnboardingStep}`).classList.add('active');
+        document.querySelector(`.dot[data-step="${currentOnboardingStep}"]`).classList.add('active');
+    }
+}
+
+function loginWithGoogle() {
+    // Placeholder for Google login
+    showToast('Login dengan Google akan segera tersedia', 'info');
+    setTimeout(() => {
+        skipLogin();
+    }, 1500);
+}
+
+function skipLogin() {
+    hideOnboarding();
     setTimeout(() => {
         showApp();
         requestNotificationPermission();
@@ -96,13 +120,13 @@ function navigateTo(viewId) {
     // Update header title
     const headerTitle = document.getElementById('headerTitle');
     const titles = {
-        'homeView': 'Manajemen Tugas',
+        'homeView': 'TaMent',
         'tasksView': 'Daftar Tugas',
         'completedView': 'Tugas Selesai',
         'statsView': 'Statistik',
         'settingsView': 'Pengaturan'
     };
-    headerTitle.textContent = titles[viewId] || 'Manajemen Tugas';
+    headerTitle.textContent = titles[viewId] || 'TaMent';
 
     // Render appropriate content
     if (viewId === 'tasksView') {
@@ -750,7 +774,7 @@ function checkReminders() {
 }
 
 function showNotification(title, body) {
-    new Notification('Manajemen Tugas', {
+    new Notification('TaMent', {
         body: `${title} - ${body}`,
         icon: 'https://ui-avatars.com/api/?name=MT&background=6366f1&color=fff&size=128',
         badge: 'https://ui-avatars.com/api/?name=MT&background=6366f1&color=fff&size=128'
