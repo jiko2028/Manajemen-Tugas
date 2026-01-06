@@ -356,6 +356,65 @@
             </div>
         </div>
 
+        <!-- Calendar View -->
+        <div id="calendarView" class="view">
+            <div class="view-content">
+                <div class="section">
+                    <h2 class="section-title">Kalender Tugas</h2>
+
+                    <!-- Month Selector -->
+                    <div class="month-selector">
+                        <button class="month-nav-btn" onclick="changeMonth(-1)">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </button>
+                        <h3 class="current-month" id="currentMonth">Januari 2026</h3>
+                        <button class="month-nav-btn" onclick="changeMonth(1)">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Calendar Grid -->
+                    <div class="calendar-container">
+                        <div class="calendar-weekdays">
+                            <div class="weekday">Min</div>
+                            <div class="weekday">Sen</div>
+                            <div class="weekday">Sel</div>
+                            <div class="weekday">Rab</div>
+                            <div class="weekday">Kam</div>
+                            <div class="weekday">Jum</div>
+                            <div class="weekday">Sab</div>
+                        </div>
+                        <div class="calendar-days" id="calendarDays">
+                            <!-- Days will be dynamically generated -->
+                        </div>
+                    </div>
+
+                    <!-- Selected Date Info -->
+                    <div class="selected-date-info" id="selectedDateInfo">
+                        <p class="selected-date-text">Pilih tanggal untuk melihat tugas</p>
+                    </div>
+
+                    <!-- Task List for Selected Date -->
+                    <div class="task-list" id="calendarTaskList">
+                        <!-- Tasks will be shown here -->
+                    </div>
+
+                    <!-- Empty State -->
+                    <div class="empty-state" id="emptyCalendarState">
+                        <div class="empty-icon">📅</div>
+                        <h3>Tidak Ada Tugas</h3>
+                        <p>Tidak ada tugas untuk tanggal ini</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Settings View -->
         <div id="settingsView" class="view">
             <div class="view-content">
@@ -443,7 +502,14 @@
                 <span>Tugas</span>
             </button>
 
-            <button class="nav-item nav-fab-placeholder"></button>
+            <button class="nav-item" data-view="calendarView" onclick="navigateTo('calendarView')">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M8 2V5M16 2V5M3 8H21M6 11H18M6 14H18M6 17H18M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span>Kalender</span>
+            </button>
 
             <button class="nav-item" data-view="statsView" onclick="navigateTo('statsView')">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -518,31 +584,31 @@
             </div>
         </div>
     </div>
-<!-- Reminder Modal HTML -->
-<!-- Tambahkan kode ini sebelum <!-- Toast Notification --> di index.html (sekitar baris 522) -->
+    <!-- Reminder Modal HTML -->
+    <!-- Tambahkan kode ini sebelum <!-- Toast Notification --> di index.html (sekitar baris 522) -->
 
-<!-- Reminder Modal -->
-<div class="modal" id="reminderModal">
-    <div class="modal-overlay" onclick="closeReminderModal()"></div>
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2 class="modal-title">🔔 Pengingat Tugas</h2>
-            <button class="modal-close" onclick="closeReminderModal()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                </svg>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div id="reminderList" class="reminder-list"></div>
-            <div class="empty-state" id="emptyReminderState">
-                <div class="empty-icon">🎉</div>
-                <h3>Tidak Ada Tugas Mendesak</h3>
-                <p>Semua tugas Anda terkendali dengan baik!</p>
+    <!-- Reminder Modal -->
+    <div class="modal" id="reminderModal">
+        <div class="modal-overlay" onclick="closeReminderModal()"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">🔔 Pengingat Tugas</h2>
+                <button class="modal-close" onclick="closeReminderModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="reminderList" class="reminder-list"></div>
+                <div class="empty-state" id="emptyReminderState">
+                    <div class="empty-icon">🎉</div>
+                    <h3>Tidak Ada Tugas Mendesak</h3>
+                    <p>Semua tugas Anda terkendali dengan baik!</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
     <!-- Toast Notification -->
     <div class="toast" id="toast">
         <div class="toast-icon" id="toastIcon">✓</div>

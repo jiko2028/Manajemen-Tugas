@@ -1563,4 +1563,142 @@ input:checked+.toggle-slider:before {
     height: 12px;
     border-radius: 50%;
     display: block;
+}/* ===== Calendar View Styling ===== */
+/* Tambahkan CSS ini di akhir file style.css */
+
+.month-selector {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    background: white;
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.month-nav-btn {
+    background: transparent;
+    border: 2px solid #e5e7eb;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.month-nav-btn:hover {
+    border-color: var(--primary);
+    background: #f3f4f6;
+}
+
+.current-month {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.calendar-container {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.weekday {
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 0.5rem 0;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    background: #f9fafb;
+}
+
+.calendar-day.empty {
+    background: transparent;
+    cursor: default;
+}
+
+.calendar-day:not(.empty):hover {
+    background: #e5e7eb;
+    transform: scale(1.05);
+}
+
+.calendar-day.today {
+    background: var(--primary);
+    color: white;
+    font-weight: 700;
+}
+
+.calendar-day.selected {
+    background: var(--primary-dark);
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.calendar-day.has-tasks {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.task-dot {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    background: white;
+    color: var(--primary);
+    font-size: 0.6rem;
+    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selected-date-info {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+}
+
+.selected-date-text {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
 }

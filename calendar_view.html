@@ -1,0 +1,59 @@
+<!-- Calendar View -->
+<!-- Tambahkan kode ini sebelum <!-- Settings View --> di index.html (sekitar baris 359) -->
+
+<!-- Calendar View -->
+<div id="calendarView" class="view">
+    <div class="view-content">
+        <div class="section">
+            <h2 class="section-title">Kalender Tugas</h2>
+
+            <!-- Month Selector -->
+            <div class="month-selector">
+                <button class="month-nav-btn" onclick="changeMonth(-1)">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </button>
+                <h3 class="current-month" id="currentMonth">Januari 2026</h3>
+                <button class="month-nav-btn" onclick="changeMonth(1)">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Calendar Grid -->
+            <div class="calendar-container">
+                <div class="calendar-weekdays">
+                    <div class="weekday">Min</div>
+                    <div class="weekday">Sen</div>
+                    <div class="weekday">Sel</div>
+                    <div class="weekday">Rab</div>
+                    <div class="weekday">Kam</div>
+                    <div class="weekday">Jum</div>
+                    <div class="weekday">Sab</div>
+                </div>
+                <div class="calendar-days" id="calendarDays">
+                    <!-- Days will be dynamically generated -->
+                </div>
+            </div>
+
+            <!-- Selected Date Info -->
+            <div class="selected-date-info" id="selectedDateInfo">
+                <p class="selected-date-text">Pilih tanggal untuk melihat tugas</p>
+            </div>
+
+            <!-- Task List for Selected Date -->
+            <div class="task-list" id="calendarTaskList">
+                <!-- Tasks will be shown here -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyCalendarState">
+                <div class="empty-icon">📅</div>
+                <h3>Tidak Ada Tugas</h3>
+                <p>Tidak ada tugas untuk tanggal ini</p>
+            </div>
+        </div>
+    </div>
+</div>
