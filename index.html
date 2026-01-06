@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -8,9 +9,11 @@
     <title>Manajemen Tugas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- Loading Screen -->
     <div id="loadingScreen" class="loading-screen active">
@@ -18,9 +21,10 @@
             <div class="loading-icon">
                 <div class="check-circle">
                     <svg viewBox="0 0 100 100">
-                        <circle class="circle-bg" cx="50" cy="50" r="45"/>
-                        <circle class="circle-progress" cx="50" cy="50" r="45"/>
-                        <path class="check-mark" d="M30 50 L45 65 L70 35" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+                        <circle class="circle-bg" cx="50" cy="50" r="45" />
+                        <circle class="circle-progress" cx="50" cy="50" r="45" />
+                        <path class="check-mark" d="M30 50 L45 65 L70 35" fill="none" stroke="#fff" stroke-width="6"
+                            stroke-linecap="round" />
                     </svg>
                 </div>
             </div>
@@ -38,20 +42,22 @@
             <div class="welcome-illustration">
                 <div class="welcome-icon">
                     <svg viewBox="0 0 200 200" fill="none">
-                        <circle cx="100" cy="100" r="80" fill="url(#gradient1)"/>
-                        <path d="M70 100 L90 120 L130 70" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="100" cy="100" r="80" fill="url(#gradient1)" />
+                        <path d="M70 100 L90 120 L130 70" stroke="white" stroke-width="8" stroke-linecap="round"
+                            stroke-linejoin="round" />
                         <defs>
                             <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#6366f1"/>
-                                <stop offset="100%" style="stop-color:#8b5cf6"/>
+                                <stop offset="0%" style="stop-color:#6366f1" />
+                                <stop offset="100%" style="stop-color:#8b5cf6" />
                             </linearGradient>
                         </defs>
                     </svg>
                 </div>
             </div>
             <h1 class="welcome-title">Selamat Datang di<br><span class="gradient-text">Manajemen Tugas</span></h1>
-            <p class="welcome-description">Kelola semua tugas Anda dengan mudah. Atur deadline, tambahkan catatan, dan pantau progres Anda.</p>
-            
+            <p class="welcome-description">Kelola semua tugas Anda dengan mudah. Atur deadline, tambahkan catatan, dan
+                pantau progres Anda.</p>
+
             <div class="welcome-features">
                 <div class="feature-item">
                     <div class="feature-icon">📝</div>
@@ -74,7 +80,7 @@
             <button class="btn-primary btn-large" onclick="startApp()">
                 <span>Mulai Sekarang</span>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
             </button>
         </div>
@@ -89,10 +95,14 @@
                     <h1 class="app-title" id="headerTitle">Manajemen Tugas</h1>
                 </div>
                 <div class="header-right">
-                    <button class="icon-btn" id="notificationBtn">
+                    <button class="icon-btn" id="notificationBtn" onclick="openReminderModal()">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path
+                                d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                         <span class="notification-badge" id="notificationBadge">0</span>
                     </button>
@@ -107,7 +117,8 @@
                 <div class="user-card">
                     <div class="user-info">
                         <div class="user-avatar">
-                            <img src="https://ui-avatars.com/api/?name=User&background=6366f1&color=fff&size=80" alt="User Avatar" id="userAvatar">
+                            <img src="https://ui-avatars.com/api/?name=User&background=6366f1&color=fff&size=80"
+                                alt="User Avatar" id="userAvatar">
                         </div>
                         <div class="user-details">
                             <p class="user-greeting">Halo, <span id="userName">Pengguna</span></p>
@@ -133,39 +144,56 @@
                     <h2 class="section-title">Menu</h2>
                     <div class="menu-grid">
                         <div class="menu-item" onclick="navigateTo('tasksView')">
-                            <div class="menu-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="menu-icon"
+                                style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                                    <path d="M9 11L12 14L22 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M9 11L12 14L22 4" stroke="white" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path
+                                        d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16"
+                                        stroke="white" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
                                 </svg>
                             </div>
                             <p class="menu-label">Daftar Tugas</p>
                         </div>
 
                         <div class="menu-item" onclick="navigateTo('completedView')">
-                            <div class="menu-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <div class="menu-icon"
+                                style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
                                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                                    <path d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.7088 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M22 4L12 14.01L9 11.01" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path
+                                        d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.7088 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999"
+                                        stroke="white" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M22 4L12 14.01L9 11.01" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </div>
                             <p class="menu-label">Tugas Selesai</p>
                         </div>
 
                         <div class="menu-item" onclick="navigateTo('statsView')">
-                            <div class="menu-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <div class="menu-icon"
+                                style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
                                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path
+                                        d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+                                        stroke="white" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
                                 </svg>
                             </div>
                             <p class="menu-label">Statistik</p>
                         </div>
 
                         <div class="menu-item" onclick="navigateTo('settingsView')">
-                            <div class="menu-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <div class="menu-icon"
+                                style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
                                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                                    <circle cx="12" cy="12" r="3" stroke="white" stroke-width="2"/>
-                                    <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="3" stroke="white" stroke-width="2" />
+                                    <path
+                                        d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22"
+                                        stroke="white" stroke-width="2" stroke-linecap="round" />
                                 </svg>
                             </div>
                             <p class="menu-label">Pengaturan</p>
@@ -183,7 +211,8 @@
                         <h2 class="section-title">Semua Tugas</h2>
                         <button class="btn-filter" id="filterBtn">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                <path d="M22 3H2L10 12.46V19L14 21V12.46L22 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M22 3H2L10 12.46V19L14 21V12.46L22 3Z" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </button>
                     </div>
@@ -191,8 +220,9 @@
                     <!-- Search Bar -->
                     <div class="search-bar">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
-                            <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" />
+                            <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" />
                         </svg>
                         <input type="text" placeholder="Cari tugas..." id="searchInput">
                     </div>
@@ -242,13 +272,13 @@
             <div class="view-content">
                 <div class="section">
                     <h2 class="section-title">Statistik & Progress</h2>
-                    
+
                     <!-- Progress Circle -->
                     <div class="progress-card">
                         <div class="progress-circle-container">
                             <svg class="progress-circle" viewBox="0 0 200 200">
-                                <circle class="progress-bg" cx="100" cy="100" r="85"/>
-                                <circle class="progress-fill" cx="100" cy="100" r="85" id="progressCircle"/>
+                                <circle class="progress-bg" cx="100" cy="100" r="85" />
+                                <circle class="progress-fill" cx="100" cy="100" r="85" id="progressCircle" />
                             </svg>
                             <div class="progress-text">
                                 <span class="progress-percentage" id="progressPercentage">0%</span>
@@ -260,10 +290,12 @@
                     <!-- Stats Cards -->
                     <div class="stats-grid">
                         <div class="stat-card">
-                            <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <div class="stat-icon"
+                                style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M9 11L12 14L22 4" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M21 12V19C21 20.1 20.1 21 19 21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M9 11L12 14L22 4" stroke="white" stroke-width="2" stroke-linecap="round" />
+                                    <path d="M21 12V19C21 20.1 20.1 21 19 21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H16"
+                                        stroke="white" stroke-width="2" stroke-linecap="round" />
                                 </svg>
                             </div>
                             <div class="stat-info">
@@ -273,10 +305,14 @@
                         </div>
 
                         <div class="stat-card">
-                            <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <div class="stat-icon"
+                                style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M22 11.08V12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2C14.76 2 17.23 3.15 19 5" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M22 4L12 14.01L9 11.01" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    <path
+                                        d="M22 11.08V12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2C14.76 2 17.23 3.15 19 5"
+                                        stroke="white" stroke-width="2" stroke-linecap="round" />
+                                    <path d="M22 4L12 14.01L9 11.01" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" />
                                 </svg>
                             </div>
                             <div class="stat-info">
@@ -286,10 +322,11 @@
                         </div>
 
                         <div class="stat-card">
-                            <div class="stat-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <div class="stat-icon"
+                                style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
-                                    <path d="M12 6V12L16 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2" />
+                                    <path d="M12 6V12L16 14" stroke="white" stroke-width="2" stroke-linecap="round" />
                                 </svg>
                             </div>
                             <div class="stat-info">
@@ -299,11 +336,14 @@
                         </div>
 
                         <div class="stat-card">
-                            <div class="stat-icon" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);">
+                            <div class="stat-icon"
+                                style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M10.29 3.86L1.82 18C1.64 18.3 1.54 18.65 1.53 19C1.52 19.35 1.6 19.7 1.77 20L1.82 20.08C2.03 20.45 2.34 20.75 2.71 20.96C3.08 21.17 3.5 21.28 3.93 21.27H20.93C21.36 21.28 21.78 21.17 22.15 20.96C22.52 20.75 22.83 20.45 23.04 20.08L23.09 20C23.26 19.7 23.34 19.35 23.33 19C23.32 18.65 23.22 18.3 23.04 18L14.57 3.86C14.35 3.49 14.04 3.19 13.67 2.98C13.3 2.77 12.88 2.66 12.45 2.66C12.02 2.66 11.6 2.77 11.23 2.98C10.86 3.19 10.55 3.49 10.33 3.86H10.29Z" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                                    <path d="M12 9V13" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                                    <circle cx="12" cy="17" r="1" fill="white"/>
+                                    <path
+                                        d="M10.29 3.86L1.82 18C1.64 18.3 1.54 18.65 1.53 19C1.52 19.35 1.6 19.7 1.77 20L1.82 20.08C2.03 20.45 2.34 20.75 2.71 20.96C3.08 21.17 3.5 21.28 3.93 21.27H20.93C21.36 21.28 21.78 21.17 22.15 20.96C22.52 20.75 22.83 20.45 23.04 20.08L23.09 20C23.26 19.7 23.34 19.35 23.33 19C23.32 18.65 23.22 18.3 23.04 18L14.57 3.86C14.35 3.49 14.04 3.19 13.67 2.98C13.3 2.77 12.88 2.66 12.45 2.66C12.02 2.66 11.6 2.77 11.23 2.98C10.86 3.19 10.55 3.49 10.33 3.86H10.29Z"
+                                        stroke="white" stroke-width="2" stroke-linecap="round" />
+                                    <path d="M12 9V13" stroke="white" stroke-width="2" stroke-linecap="round" />
+                                    <circle cx="12" cy="17" r="1" fill="white" />
                                 </svg>
                             </div>
                             <div class="stat-info">
@@ -321,7 +361,7 @@
             <div class="view-content">
                 <div class="section">
                     <h2 class="section-title">Pengaturan</h2>
-                    
+
                     <!-- Profile Settings -->
                     <div class="settings-group">
                         <h3 class="settings-group-title">Profil</h3>
@@ -352,8 +392,10 @@
                         <h3 class="settings-group-title">Data</h3>
                         <button class="btn-danger" onclick="clearAllData()">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                <path
+                                    d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                             </svg>
                             Hapus Semua Data
                         </button>
@@ -375,7 +417,7 @@
         <!-- Floating Action Button -->
         <button class="fab" id="fabBtn" onclick="openTaskModal()">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M12 5V19M5 12H19" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                <path d="M12 5V19M5 12H19" stroke="white" stroke-width="3" stroke-linecap="round" />
             </svg>
         </button>
 
@@ -383,32 +425,40 @@
         <nav class="bottom-nav">
             <button class="nav-item active" data-view="homeView" onclick="navigateTo('homeView')">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path
+                        d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 <span>Beranda</span>
             </button>
-            
+
             <button class="nav-item" data-view="tasksView" onclick="navigateTo('tasksView')">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path
+                        d="M21 12V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H16"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 <span>Tugas</span>
             </button>
-            
+
             <button class="nav-item nav-fab-placeholder"></button>
-            
+
             <button class="nav-item" data-view="statsView" onclick="navigateTo('statsView')">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M18 20V10M12 20V4M6 20V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M18 20V10M12 20V4M6 20V14" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
                 </svg>
                 <span>Statistik</span>
             </button>
-            
+
             <button class="nav-item" data-view="settingsView" onclick="navigateTo('settingsView')">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
-                    <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" />
+                    <path
+                        d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
                 <span>Pengaturan</span>
             </button>
@@ -423,17 +473,18 @@
                 <h2 class="modal-title" id="modalTitle">Tambah Tugas Baru</h2>
                 <button class="modal-close" onclick="closeTaskModal()">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                     </svg>
                 </button>
             </div>
             <div class="modal-body">
                 <form id="taskForm">
                     <input type="hidden" id="taskId">
-                    
+
                     <div class="form-group">
                         <label for="taskTitle">Judul Tugas *</label>
-                        <input type="text" id="taskTitle" class="input-field" placeholder="Masukkan judul tugas" required>
+                        <input type="text" id="taskTitle" class="input-field" placeholder="Masukkan judul tugas"
+                            required>
                     </div>
 
                     <div class="form-group">
@@ -452,7 +503,8 @@
 
                     <div class="form-group">
                         <label for="taskNotes">Catatan</label>
-                        <textarea id="taskNotes" class="input-field textarea" rows="4" placeholder="Tambahkan catatan (opsional)" maxlength="500"></textarea>
+                        <textarea id="taskNotes" class="input-field textarea" rows="4"
+                            placeholder="Tambahkan catatan (opsional)" maxlength="500"></textarea>
                         <span class="char-counter"><span id="charCount">0</span>/500</span>
                     </div>
 
@@ -466,7 +518,31 @@
             </div>
         </div>
     </div>
+<!-- Reminder Modal HTML -->
+<!-- Tambahkan kode ini sebelum <!-- Toast Notification --> di index.html (sekitar baris 522) -->
 
+<!-- Reminder Modal -->
+<div class="modal" id="reminderModal">
+    <div class="modal-overlay" onclick="closeReminderModal()"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">🔔 Pengingat Tugas</h2>
+            <button class="modal-close" onclick="closeReminderModal()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div id="reminderList" class="reminder-list"></div>
+            <div class="empty-state" id="emptyReminderState">
+                <div class="empty-icon">🎉</div>
+                <h3>Tidak Ada Tugas Mendesak</h3>
+                <p>Semua tugas Anda terkendali dengan baik!</p>
+            </div>
+        </div>
+    </div>
+</div>
     <!-- Toast Notification -->
     <div class="toast" id="toast">
         <div class="toast-icon" id="toastIcon">✓</div>
@@ -475,4 +551,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>
