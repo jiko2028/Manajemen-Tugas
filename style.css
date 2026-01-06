@@ -1417,9 +1417,9 @@ input:checked+.toggle-slider:before {
 /* ===== Toast ===== */
 .toast {
     position: fixed;
-    bottom: 100px;
+    top: 20px;
     left: 50%;
-    transform: translateX(-50%) translateY(100px);
+    transform: translateX(-50%) translateY(-100px);
     background: var(--text-primary);
     color: white;
     padding: 1rem 1.5rem;
@@ -1431,11 +1431,14 @@ input:checked+.toggle-slider:before {
     z-index: 2000;
     opacity: 0;
     transition: var(--transition);
+    pointer-events: none;
+    max-width: 90%;
 }
 
 .toast.show {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
+    pointer-events: none;
 }
 
 .toast-icon {
