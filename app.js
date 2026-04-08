@@ -72,19 +72,156 @@ function nextOnboardingStep() {
 }
 
 function loginWithGoogle() {
-    // Placeholder for Google login
-    showToast('Login dengan Google akan segera tersedia', 'info');
+    // Simulate Google login (in production, replace with real OAuth)
+    const googleUser = {
+        name: 'Pengguna Google',
+        email: 'user@gmail.com',
+        avatar: 'https://ui-avatars.com/api/?name=G&background=4285F4&color=fff&size=80',
+        loginType: 'google'
+    };
+    localStorage.setItem('userSession', JSON.stringify(googleUser));
+    localStorage.setItem('userName', googleUser.name);
+    showToast('Berhasil masuk dengan Google! 🎉', 'success');
     setTimeout(() => {
-        skipLogin();
-    }, 1500);
+        hideOnboarding();
+        setTimeout(() => {
+            showApp();
+            requestNotificationPermission();
+        }, 300);
+    }, 800);
 }
 
 function skipLogin() {
+    // Mark as guest
+    const guestUser = {
+        name: localStorage.getItem('userName') || 'Tamu',
+        loginType: 'guest'
+    };
+    localStorage.setItem('userSession', JSON.stringify(guestUser));
     hideOnboarding();
     setTimeout(() => {
         showApp();
         requestNotificationPermission();
     }, 300);
+}
+
+function logoutUser() {
+    if (!confirm('Apakah Anda yakin ingin keluar? Anda akan masuk sebagai tamu.')) return;
+
+    // Clear session but keep tasks data
+    localStorage.removeItem('userSession');
+
+    // Set as guest mode
+    const guestUser = {
+        name: 'Tamu',
+        loginType: 'guest'
+    };
+    localStorage.setItem('userSession', JSON.stringify(guestUser));
+    localStorage.setItem('userName', 'Tamu');
+
+    // Update UI
+    updateUserProfile();
+    showToast('Berhasil keluar. Anda sekarang sebagai tamu.', 'success');
+
+    // Stay in app but navigate to home
+    navigateTo('homeView');
+}
+
+function goToLogin() {
+    // Hide app
+    const appContainer = document.getElementById('appContainer');
+    appContainer.classList.remove('active');
+
+    // Reset onboarding to step 3 (Login step)
+    currentOnboardingStep = 3;
+    document.getElementById('onboardingStep1').classList.remove('active');
+    document.getElementById('onboardingStep2').classList.remove('active');
+    document.getElementById('onboardingStep3').classList.add('active');
+    document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+    document.querySelector('.dot[data-step="3"]').classList.add('active');
+
+    // Show onboarding
+    showOnboarding();
+}
+
+function updateUserProfile() {
+    const sessionStr = localStorage.getItem('userSession');
+    const session = sessionStr ? JSON.parse(sessionStr) : null;
+    const isGoogle = session && session.loginType === 'google';
+    const userName = session ? session.name : 'Pengguna';
+    const userEmail = session && session.email ? session.email : null;
+
+    // Update home user card
+    const userNameEl = document.getElementById('userName');
+    const userAvatarEl = document.getElementById('userAvatar');
+    const userStatusEl = document.querySelector('.user-status');
+
+    if (userNameEl) userNameEl.textContent = userName;
+    if (userAvatarEl) {
+        if (isGoogle && session.avatar) {
+            userAvatarEl.src = session.avatar;
+        } else {
+            userAvatarEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=6366f1&color=fff&size=80`;
+        }
+    }
+    if (userStatusEl) {
+        userStatusEl.className = 'user-status ' + (isGoogle ? 'active' : 'guest');
+        userStatusEl.innerHTML = isGoogle
+            ? '<span class="status-dot"></span><span>Google</span>'
+            : '<span class="status-dot guest-dot"></span><span>Tamu</span>';
+    }
+
+    // Update settings profile section
+    const settingsProfileEl = document.getElementById('settingsUserInfo');
+    if (settingsProfileEl) {
+        if (isGoogle) {
+            settingsProfileEl.innerHTML = `
+                <div class="settings-user-card google-user">
+                    <img src="${session.avatar}" alt="Avatar" class="settings-avatar">
+                    <div class="settings-user-details">
+                        <p class="settings-user-name">${userName}</p>
+                        <p class="settings-user-email">${userEmail}</p>
+                        <span class="login-badge google-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                            Login dengan Google
+                        </span>
+                    </div>
+                </div>
+            `;
+        } else {
+            settingsProfileEl.innerHTML = `
+                <div class="settings-user-card guest-user">
+                    <div class="settings-avatar-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
+                            <path d="M4 20C4 17 7.58 15 12 15C16.42 15 20 17 20 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="settings-user-details">
+                        <p class="settings-user-name">${userName}</p>
+                        <p class="settings-user-email">Mode Tamu</p>
+                        <span class="login-badge guest-badge">Tamu</span>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    // Update logout button visibility (only for Google users)
+    const logoutBtnEl = document.getElementById('logoutBtn');
+    if (logoutBtnEl) {
+        logoutBtnEl.style.display = isGoogle ? 'flex' : 'none';
+    }
+
+    // Update login button visibility (only for guests)
+    const loginBtnEl = document.getElementById('goToLoginBtn');
+    if (loginBtnEl) {
+        loginBtnEl.style.display = isGoogle ? 'none' : 'flex';
+    }
+
+    // Update settings name input
+    const userNameInput = document.getElementById('userNameInput');
+    if (userNameInput) userNameInput.value = userName;
 }
 
 function showApp() {
@@ -93,6 +230,7 @@ function showApp() {
     renderTasks();
     updateStats();
     updateTodaySchedule();
+    updateUserProfile(); // Sync profil dengan sesi aktif
 }
 
 // ===== Navigation =====
@@ -819,22 +957,15 @@ function loadFromStorage() {
         tasks = JSON.parse(storedTasks);
     }
 
-    // Load user name
-    const userName = localStorage.getItem('userName');
-    if (userName) {
-        document.getElementById('userName').textContent = userName;
-        document.getElementById('userNameInput').value = userName;
-
-        const userAvatar = document.getElementById('userAvatar');
-        userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=6366f1&color=fff&size=80`;
-    }
-
     // Load notification settings
     const notifEnabled = localStorage.getItem('notificationsEnabled');
     if (notifEnabled === 'true') {
         notificationsEnabled = true;
         document.getElementById('notificationToggle').checked = true;
     }
+
+    // Update user profile from session
+    updateUserProfile();
 }
 
 // ===== Toast =====

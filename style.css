@@ -2305,3 +2305,168 @@ input:checked+.toggle-slider:before {
     margin: 0 auto 0.75rem;
     display: block;
 }
+
+/* ===== Guest Status Badge ===== */
+.user-status.guest {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.status-dot.guest-dot {
+    background: #f59e0b;
+}
+
+/* ===== Settings User Info Card ===== */
+.settings-user-info-wrapper {
+    margin-bottom: 1rem;
+}
+
+.settings-user-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 0.5rem;
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.settings-user-card.google-user {
+    background: linear-gradient(135deg, #eff6ff, #f0fdf4);
+    border: 1.5px solid #bfdbfe;
+}
+
+.settings-user-card.guest-user {
+    background: #f9fafb;
+    border: 1.5px solid #e5e7eb;
+}
+
+.settings-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #4285F4;
+    flex-shrink: 0;
+}
+
+.settings-avatar-placeholder {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--text-muted);
+}
+
+.settings-user-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.settings-user-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    margin-bottom: 0.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.settings-user-email {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.4rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.login-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.login-badge.google-badge {
+    background: #e8f0fe;
+    color: #1a73e8;
+    border: 1px solid #c5d9fb;
+}
+
+.login-badge.guest-badge {
+    background: #fef3c7;
+    color: #d97706;
+    border: 1px solid #fde68a;
+}
+
+/* ===== Logout Button ===== */
+.btn-logout {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+    color: white;
+    border: none;
+    padding: 0.875rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    justify-content: center;
+    transition: var(--transition);
+    margin-top: 0.75rem;
+    box-shadow: 0 4px 15px rgba(238, 90, 111, 0.35);
+}
+
+.btn-logout:hover {
+    background: linear-gradient(135deg, #ee5a6f, #d63031);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(238, 90, 111, 0.45);
+}
+
+.btn-logout:active {
+    transform: translateY(0);
+}
+
+/* ===== Go To Login Button (Guest Mode) ===== */
+.btn-go-login {
+    background: #ffffff;
+    color: #3c4043;
+    border: 1.5px solid #dadce0;
+    padding: 0.875rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    justify-content: center;
+    transition: var(--transition);
+    margin-top: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    font-family: inherit;
+}
+
+.btn-go-login:hover {
+    background: #f8f9fa;
+    border-color: #4285F4;
+    box-shadow: 0 4px 15px rgba(66, 133, 244, 0.2);
+    transform: translateY(-2px);
+}
+
+.btn-go-login:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
