@@ -28,7 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
             showOnboarding();
             localStorage.setItem('hasVisited', 'true');
         } else {
-            showApp();
+            const session = localStorage.getItem('userSession');
+            if (!session) {
+                // If there's no active session (Google or Guest), force them to login
+                goToLogin();
+            } else {
+                showApp();
+            }
         }
     }, 2500);
 });
@@ -106,25 +112,18 @@ function skipLogin() {
 }
 
 function logoutUser() {
-    if (!confirm('Apakah Anda yakin ingin keluar? Anda akan masuk sebagai tamu.')) return;
+    if (!confirm('Apakah Anda yakin ingin keluar?')) return;
 
     // Clear session but keep tasks data
     localStorage.removeItem('userSession');
-
-    // Set as guest mode
-    const guestUser = {
-        name: 'Tamu',
-        loginType: 'guest'
-    };
-    localStorage.setItem('userSession', JSON.stringify(guestUser));
-    localStorage.setItem('userName', 'Tamu');
+    localStorage.removeItem('userName');
 
     // Update UI
     updateUserProfile();
-    showToast('Berhasil keluar. Anda sekarang sebagai tamu.', 'success');
+    showToast('Berhasil keluar.', 'success');
 
-    // Stay in app but navigate to home
-    navigateTo('homeView');
+    // Bawa pengguna ke halaman login
+    goToLogin();
 }
 
 function goToLogin() {
