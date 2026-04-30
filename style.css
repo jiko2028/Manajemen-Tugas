@@ -1233,6 +1233,12 @@ input:checked+.toggle-slider:before {
     transform: scale(0.95);
 }
 
+@media (min-width: 481px) {
+    .fab {
+        right: calc(50vw - 220px);
+    }
+}
+
 /* ===== Bottom Navigation ===== */
 .bottom-nav {
     position: fixed;
