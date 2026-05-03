@@ -402,6 +402,7 @@ function toggleTaskComplete(taskId) {
         task.updatedAt = new Date().toISOString();
         saveToStorage();
         renderTasks();
+        renderCompletedTasks();
         updateStats();
         updateTodaySchedule();
 
@@ -431,6 +432,7 @@ function deleteTask(taskId) {
         tasks = tasks.filter(t => t.id !== taskId);
         saveToStorage();
         renderTasks();
+        renderCompletedTasks();
         updateStats();
         updateTodaySchedule();
         showToast('Tugas berhasil dihapus', 'success');
