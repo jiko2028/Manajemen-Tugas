@@ -135,6 +135,20 @@
     gap: 0.75rem;
 }
 
+.subtask-progress-readonly {
+    display: flex;
+    align-items: center;
+}
+
+.subtask-progress-readonly .progress-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--primary);
+    background: #f3f4f6;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
 .progress-slider {
     flex: 1;
     height: 6px;
